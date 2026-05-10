@@ -49,6 +49,8 @@ const StatCard = ({ title, value, icon: Icon, color, trend }) => (
   </motion.div>
 );
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1';
+
 const Dashboard = () => {
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -56,7 +58,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/v1/dashboard/stats');
+        const response = await axios.get(`${API_BASE_URL}/dashboard/stats`);
         setStats(response.data);
       } catch (error) {
         console.error("Error fetching stats", error);

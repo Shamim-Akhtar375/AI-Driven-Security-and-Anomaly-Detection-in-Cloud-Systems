@@ -12,6 +12,8 @@ import {
 } from 'lucide-react';
 import axios from 'axios';
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1';
+
 const Logs = () => {
   const [logs, setLogs] = useState([]);
   const [uploading, setUploading] = useState(false);
@@ -21,7 +23,7 @@ const Logs = () => {
   const fetchLogs = async () => {
     setLoading(true);
     try {
-      const response = await axios.get('http://localhost:8000/api/v1/logs/');
+      const response = await axios.get(`${API_BASE_URL}/logs/`);
       setLogs(response.data);
     } catch (error) {
       console.error("Error fetching logs", error);
@@ -43,7 +45,7 @@ const Logs = () => {
 
     setUploading(true);
     try {
-      await axios.post('http://localhost:8000/api/v1/logs/upload', formData);
+      await axios.post(`${API_BASE_URL}/logs/upload`, formData);
       fetchLogs();
     } catch (error) {
       console.error("Upload failed", error);
@@ -55,7 +57,7 @@ const Logs = () => {
   const generateSamples = async () => {
     setLoading(true);
     try {
-      await axios.post('http://localhost:8000/api/v1/logs/generate-sample');
+      await axios.post(`${API_BASE_URL}/logs/generate-sample`);
       fetchLogs();
     } catch (error) {
       console.error("Generation failed", error);
